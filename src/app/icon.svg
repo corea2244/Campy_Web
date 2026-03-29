@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <linearGradient id="mountain1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="mountain2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#sky)"/>
+  <!-- Stars -->
+  <circle cx="120" cy="80" r="4" fill="#e0f2fe" opacity="0.8"/>
+  <circle cx="350" cy="60" r="3" fill="#e0f2fe" opacity="0.6"/>
+  <circle cx="420" cy="120" r="4" fill="#e0f2fe" opacity="0.7"/>
+  <circle cx="80" cy="150" r="3" fill="#e0f2fe" opacity="0.5"/>
+  <circle cx="250" cy="50" r="3" fill="#e0f2fe" opacity="0.6"/>
+  <!-- Back mountain -->
+  <path d="M-20 420 L150 180 L220 240 L320 140 L520 420 Z" fill="url(#mountain2)" opacity="0.6"/>
+  <!-- Front mountain -->
+  <path d="M-20 420 L180 160 L240 220 L340 120 L400 200 L540 420 Z" fill="url(#mountain1)"/>
+  <!-- Snow caps -->
+  <path d="M340 120 L360 155 L380 140 L400 200 L370 170 L340 180 L310 160 Z" fill="#dbeafe" opacity="0.9"/>
+  <path d="M180 160 L200 195 L215 185 L240 220 L210 200 L185 205 L160 190 Z" fill="#dbeafe" opacity="0.9"/>
+  <!-- Tent -->
+  <path d="M240 390 L280 320 L320 390 Z" fill="#fbbf24"/>
+  <path d="M280 320 L280 390 L240 390 Z" fill="#f59e0b"/>
+  <line x1="280" y1="318" x2="280" y2="390" stroke="#d97706" stroke-width="2"/>
+  <!-- Tent door -->
+  <path d="M268 390 L280 355 L292 390 Z" fill="#92400e" opacity="0.6"/>
+  <!-- Ground -->
+  <ellipse cx="280" cy="395" rx="60" ry="8" fill="#1e40af" opacity="0.3"/>
+  <!-- Trail -->
+  <path d="M280 395 Q320 400 360 410 Q400 415 450 412 Q490 408 520 420" stroke="#93c5fd" stroke-width="3" fill="none" opacity="0.5" stroke-dasharray="8,6"/>
+</svg>

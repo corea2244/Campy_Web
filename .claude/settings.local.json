@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(npx:*)",
+      "Bash(printf 'No\\\\nNo\\\\n')",
+      "Bash(yes \"No\")",
+      "Bash(cp -r campy-web-temp/* campy-web-temp/.eslintrc* campy-web-temp/.gitignore Campy_Web/)",
+      "Bash(cp campy-web-temp/.gitignore Campy_Web/.gitignore)",
+      "Bash(shopt -s dotglob)",
+      "Bash(cp -r campy-web-temp/* Campy_Web/)",
+      "Bash(git:*)"
+    ]
+  }
+}
