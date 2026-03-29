@@ -2,6 +2,29 @@
 
 import { useEffect, useState } from "react";
 
+const STARS = [
+  { w: 2.1, h: 1.5, t: 4.9, l: 0.9, d: 0.2, dur: 3.5, o: 0.5 },
+  { w: 2.4, h: 3.5, t: 13.1, l: 39.8, d: 0.4, dur: 3.5, o: 0.65 },
+  { w: 1.5, h: 1.9, t: 5.0, l: 7.2, d: 2.4, dur: 2.1, o: 0.54 },
+  { w: 1.6, h: 3.1, t: 33.2, l: 59.9, d: 0.0, dur: 3.6, o: 0.32 },
+  { w: 2.8, h: 2.1, t: 26.4, l: 34.6, d: 2.1, dur: 2.6, o: 0.55 },
+  { w: 1.4, h: 1.1, t: 38.5, l: 86.2, d: 2.7, dur: 2.7, o: 0.74 },
+  { w: 1.1, h: 3.4, t: 34.8, l: 26.6, d: 1.3, dur: 2.8, o: 0.35 },
+  { w: 3.3, h: 3.8, t: 23.6, l: 7.0, d: 3.0, dur: 3.5, o: 0.7 },
+  { w: 3.2, h: 2.8, t: 30.6, l: 76.8, d: 1.7, dur: 2.8, o: 0.57 },
+  { w: 2.5, h: 1.6, t: 7.5, l: 25.3, d: 2.0, dur: 3.4, o: 0.69 },
+  { w: 2.1, h: 3.7, t: 31.0, l: 26.1, d: 1.9, dur: 3.7, o: 0.47 },
+  { w: 2.3, h: 3.3, t: 26.2, l: 76.9, d: 0.3, dur: 2.6, o: 0.56 },
+  { w: 3.1, h: 3.6, t: 34.5, l: 96.3, d: 1.3, dur: 2.9, o: 0.53 },
+  { w: 3.6, h: 3.4, t: 29.5, l: 33.3, d: 0.4, dur: 3.3, o: 0.79 },
+  { w: 2.8, h: 1.7, t: 36.8, l: 8.6, d: 1.5, dur: 3.1, o: 0.57 },
+  { w: 3.2, h: 2.4, t: 39.1, l: 20.1, d: 0.5, dur: 2.8, o: 0.6 },
+  { w: 1.9, h: 3.1, t: 15.6, l: 8.1, d: 1.1, dur: 3.2, o: 0.48 },
+  { w: 1.5, h: 1.3, t: 0.6, l: 78.7, d: 2.1, dur: 3.7, o: 0.68 },
+  { w: 1.8, h: 2.5, t: 22.7, l: 86.6, d: 1.7, dur: 2.5, o: 0.75 },
+  { w: 2.4, h: 1.5, t: 33.7, l: 57.0, d: 0.2, dur: 3.4, o: 0.58 },
+];
+
 export default function SplashScreen() {
   const [progress, setProgress] = useState(0);
 
@@ -22,18 +45,18 @@ export default function SplashScreen() {
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-blue-950 via-blue-900 to-blue-800 z-50">
       {/* Stars */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {STARS.map((star, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-blue-200 animate-pulse"
             style={{
-              width: `${Math.random() * 3 + 1}px`,
-              height: `${Math.random() * 3 + 1}px`,
-              top: `${Math.random() * 40}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${Math.random() * 2 + 2}s`,
-              opacity: Math.random() * 0.5 + 0.3,
+              width: `${star.w}px`,
+              height: `${star.h}px`,
+              top: `${star.t}%`,
+              left: `${star.l}%`,
+              animationDelay: `${star.d}s`,
+              animationDuration: `${star.dur}s`,
+              opacity: star.o,
             }}
           />
         ))}
