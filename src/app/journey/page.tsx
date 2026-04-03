@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { getMyRecords } from "@/services/records";
+import { getMyRecords, deleteRecord } from "@/services/records";
 import type { CampRecord } from "@/types/database";
 
 const KakaoMap = dynamic(() => import("@/components/journey/KakaoMap"), {
@@ -21,6 +21,22 @@ export default function JourneyPage() {
   const [records, setRecords] = useState<CampRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecord, setSelectedRecord] = useState<CampRecord | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
+
+  async function handleDelete(record: CampRecord) {
+    if (!confirm(`"${record.title}" 기록을 삭제하시겠습니까?`)) return;
+
+    setDeleting(record.id);
+    try {
+      await deleteRecord(record.id);
+      setRecords((prev) => prev.filter((r) => r.id !== record.id));
+      if (selectedRecord?.id === record.id) setSelectedRecord(null);
+    } catch {
+      alert("삭제에 실패했습니다.");
+    } finally {
+      setDeleting(null);
+    }
+  }
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -136,25 +152,47 @@ export default function JourneyPage() {
                   </p>
                 )}
               </div>
-              <button
-                onClick={() => setSelectedRecord(null)}
-                className="text-blue-300 hover:text-blue-500 transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleDelete(selectedRecord)}
+                  disabled={deleting === selectedRecord.id}
+                  className="text-red-300 hover:text-red-500 transition-colors disabled:opacity-50"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setSelectedRecord(null)}
+                  className="text-blue-300 hover:text-blue-500 transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -191,6 +229,18 @@ export default function JourneyPage() {
                   {record.content}
                 </p>
               )}
+              <div className="flex justify-end mt-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(record);
+                  }}
+                  disabled={deleting === record.id}
+                  className="text-xs text-red-400 hover:text-red-600 transition-colors disabled:opacity-50"
+                >
+                  {deleting === record.id ? "삭제 중..." : "삭제"}
+                </button>
+              </div>
             </button>
           ))}
         </div>
