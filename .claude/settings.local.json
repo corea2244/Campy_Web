@@ -9,7 +9,18 @@
       "Bash(cp campy-web-temp/.gitignore Campy_Web/.gitignore)",
       "Bash(shopt -s dotglob)",
       "Bash(cp -r campy-web-temp/* Campy_Web/)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(xargs grep:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p /c/Users/Lee/Desktop/KangHyi/campy97/src/lib/supabase)",
+      "Bash(mkdir -p /c/Users/Lee/Desktop/KangHyi/campy97/src/services)",
+      "Bash(mkdir -p /c/Users/Lee/Desktop/KangHyi/campy97/src/components/auth)",
+      "Bash(mkdir -p /c/Users/Lee/Desktop/KangHyi/campy97/src/app/auth/callback)",
+      "Bash(mkdir -p /c/Users/Lee/Desktop/KangHyi/campy97/src/app/login)",
+      "Bash(npm run:*)",
+      "Bash(npm list:*)",
+      "Bash(node:*)",
+      "Bash(grep -r \"proxy\" /c/Users/Lee/Desktop/KangHyi/campy97/src /c/Users/Lee/Desktop/KangHyi/campy97/*.ts /c/Users/Lee/Desktop/KangHyi/campy97/*.tsx)"
     ]
   }
 }

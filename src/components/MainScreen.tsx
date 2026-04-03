@@ -1,9 +1,20 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { APP_VERSION } from "@/constants";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { signOut } from "@/services/auth";
 
 export default function MainScreen() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await signOut();
+    router.push("/login");
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col animate-fade-in">
       {/* Header */}
@@ -17,6 +28,19 @@ export default function MainScreen() {
           </h1>
         </div>
         <p className="text-blue-500 text-sm">나만의 백패킹 여정을 기록하세요</p>
+        {user && (
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <span className="text-xs text-blue-400">
+              {user.email}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="text-xs text-blue-400 hover:text-blue-600 underline transition-colors"
+            >
+              로그아웃
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Main Content */}

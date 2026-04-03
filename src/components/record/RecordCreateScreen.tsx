@@ -3,11 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type {
-  CampRecordDraft,
   RecordLocation,
   RecordPhoto,
   RecordDateType,
 } from "@/types/record";
+import { createRecord } from "@/services/records";
+import { uploadRecordPhotos } from "@/services/record-photos";
 
 const MAX_PHOTOS = 20;
 
@@ -28,6 +29,7 @@ export default function RecordCreateScreen() {
   const [photos, setPhotos] = useState<RecordPhoto[]>([]);
   const [locationLoading, setLocationLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showLocationSearch, setShowLocationSearch] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
@@ -112,24 +114,40 @@ export default function RecordCreateScreen() {
     return errs;
   }
 
-  function handleSave() {
+  async function handleSave() {
     const errs = validate();
     setErrors(errs);
     if (errs.length > 0) return;
 
-    const draft: CampRecordDraft = {
-      title: title.trim(),
-      content: content.trim(),
-      dateType,
-      startDate,
-      endDate: dateType === "range" ? endDate : null,
-      location,
-      photos,
-    };
+    setSaving(true);
+    try {
+      const record = await createRecord({
+        title: title.trim(),
+        content: content.trim(),
+        date_type: dateType,
+        start_date: startDate,
+        end_date: dateType === "range" ? endDate : null,
+        place_name: location?.placeName ?? null,
+        address: location?.address ?? null,
+        latitude: location?.latitude ?? null,
+        longitude: location?.longitude ?? null,
+      });
 
-    // TODO: 실제 저장 로직 연동
-    console.log("저장 payload:", draft);
-    setSubmitted(true);
+      const files = photos
+        .map((p) => p.file)
+        .filter((f): f is File => f !== undefined);
+      if (files.length > 0) {
+        await uploadRecordPhotos(record.id, files);
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setErrors([
+        err instanceof Error ? err.message : "저장 중 오류가 발생했습니다.",
+      ]);
+    } finally {
+      setSaving(false);
+    }
   }
 
   function handlePhotoAdd(e: React.ChangeEvent<HTMLInputElement>) {
@@ -142,6 +160,7 @@ export default function RecordCreateScreen() {
     const newPhotos: RecordPhoto[] = selected.map((file) => ({
       uri: URL.createObjectURL(file),
       fileName: file.name,
+      file,
     }));
 
     setPhotos((prev) => [...prev, ...newPhotos]);
@@ -505,9 +524,10 @@ export default function RecordCreateScreen() {
           <button
             type="button"
             onClick={handleSave}
-            className="w-full py-4 rounded-xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-lg shadow-blue-200"
+            disabled={saving}
+            className="w-full py-4 rounded-xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-lg shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            저장하기
+            {saving ? "저장 중..." : "저장하기"}
           </button>
         </div>
       </div>

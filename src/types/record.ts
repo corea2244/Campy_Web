@@ -10,6 +10,7 @@ export interface RecordLocation {
 export interface RecordPhoto {
   uri: string;
   fileName?: string;
+  file?: File;
 }
 
 export interface CampRecordDraft {
