@@ -4,24 +4,35 @@ import { useState, useEffect } from "react";
 import SplashScreen from "@/components/SplashScreen";
 import MainScreen from "@/components/MainScreen";
 
+const MIN_SPLASH_MS = 1500;
+
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !sessionStorage.getItem("splashShown");
+  });
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    const fadeTimer = setTimeout(() => {
-      setFadeOut(true);
-    }, 4500);
+    if (!showSplash) return;
 
-    const hideTimer = setTimeout(() => {
-      setShowSplash(false);
-    }, 5000);
+    const start = Date.now();
 
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(hideTimer);
+    const finish = () => {
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, MIN_SPLASH_MS - elapsed);
+
+      setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          sessionStorage.setItem("splashShown", "1");
+          setShowSplash(false);
+        }, 500);
+      }, remaining);
     };
-  }, []);
+
+    finish();
+  }, [showSplash]);
 
   return (
     <>
