@@ -77,7 +77,10 @@ export default function MainScreen() {
         </Link>
 
         {/* 여정보기 Card */}
-        <button className="group w-full rounded-2xl bg-white p-8 shadow-lg shadow-blue-100 border border-blue-100 hover:shadow-xl hover:shadow-blue-200/50 hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 text-left cursor-pointer">
+        <Link
+          href="/journey"
+          className="group w-full rounded-2xl bg-white p-8 shadow-lg shadow-blue-100 border border-blue-100 hover:shadow-xl hover:shadow-blue-200/50 hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 text-left cursor-pointer block"
+        >
           <div className="flex items-center gap-5">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-md shadow-blue-300/50 group-hover:scale-105 transition-transform">
               <svg
@@ -102,7 +105,7 @@ export default function MainScreen() {
               </p>
             </div>
           </div>
-        </button>
+        </Link>
       </main>
 
       {/* Footer */}
