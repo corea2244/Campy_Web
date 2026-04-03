@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { APP_VERSION } from "@/constants";
 
 const STARS = [
   { w: 2.1, h: 1.5, t: 4.9, l: 0.9, d: 0.2, dur: 3.5, o: 0.5 },
@@ -101,6 +102,9 @@ export default function SplashScreen() {
           </h1>
           <p className="mt-2 text-blue-300 text-sm tracking-widest">
             백패킹 기록
+          </p>
+          <p className="mt-1 text-blue-500 text-xs tracking-wider">
+            v{APP_VERSION}
           </p>
         </div>
       </div>

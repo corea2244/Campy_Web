@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { APP_VERSION } from "@/constants";
 
 export default function MainScreen() {
   return (
@@ -83,6 +84,7 @@ export default function MainScreen() {
       {/* Footer */}
       <footer className="py-6 text-center">
         <p className="text-xs text-blue-300">Campy &copy; 2026</p>
+        <p className="text-xs text-blue-300 mt-1">v{APP_VERSION}</p>
       </footer>
     </div>
   );
